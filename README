@@ -1,0 +1,36 @@
+Robert Cameron
+November 1999
+
+Updated Feb 24, 2015 by t. isobe (tisobe@cfa.harvard.edu)
+
+
+This directory contains a couple of perl scripts to monitor the ACE satellite
+proton fluxes for Chandra operations, plus the associated data files.
+
+
+get_kp.pl:   ACE Kp monitoring system for Chandra
+
+        - input:  ftp://ftp.swpc.noaa.gov/pub/lists/wingkp/wingkp_list.txt
+
+        - output: /data/mta4/proj/rac/ops/ACE/kp.dat
+
+
+fmon.pl:    read ACE data and construct local ACE archive files.
+
+        - input:  /data/mta4/proj/rac/ops/ephem/gephem.dat
+                  /data/mta4/proj/rac/ops/ACE/fluace.dat
+                  /data/mta4/proj/rac/ops/ACE/ace.archive
+
+        - output: /data/mta4/proj/rac/ops/ACE/fluace.dat  (current ACE flux and fluence for Chandra orbit)
+                  /data/mta4/proj/rac/ops/ACE/fluace.arc  (ACE fluence archive for each Chandra orbit) 
+                  /data/mta4/proj/rac/ops/ACE/ace.archive (3-day ACE flux archive)
+                  /data/mta4/proj/rac/ops/ACE/falert.dat  (in perigee, resets the alert counter/timer data)
+        - period: 5 minutes
+
+
+Cron job
+--------
+9,24,39,54 * * * *                        /data/mta4/proj/rac/ops/ACE/get_kp.pl
+
+3,8,13,18,23,28,33,38,43,48,53,58 * * * * /data/mta4/proj/rac/ops/ACE/fmon.pl  
+
